@@ -3,6 +3,7 @@ package flixel.system.debug.console;
 #if FLX_DEBUG
 import flixel.FlxG;
 import flixel.FlxObject;
+import flixel.system.debug.FlxDebugger.GraphicConsole;
 import flixel.system.debug.completion.CompletionHandler;
 import flixel.system.debug.completion.CompletionList;
 import flixel.util.FlxStringUtil;
@@ -71,7 +72,7 @@ class Console extends Window
 	 */
 	public function new(completionList:CompletionList)
 	{
-		super("Console", Icon.console, 0, 0, false);
+		super("Console", new GraphicConsole(0, 0), 0, 0, false);
 		this.completionList = completionList;
 		completionList.setY(y + Window.HEADER_HEIGHT);
 

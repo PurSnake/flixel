@@ -449,6 +449,8 @@ class FlxGraphic implements IFlxDestroyable
 
 		shader = null;
 
+		key = null;
+		assetsKey = null;
 		assetsClass = null;
 		imageFrame = FlxDestroyUtil.destroy(imageFrame);
 

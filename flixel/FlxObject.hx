@@ -1,5 +1,6 @@
 package flixel;
 
+import openfl.display.Graphics;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
@@ -12,7 +13,6 @@ import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxDirectionFlags;
 import flixel.util.FlxSpriteUtil;
 import flixel.util.FlxStringUtil;
-import openfl.display.Graphics;
 
 /**
  * At their core `FlxObjects` are just boxes with positions that can move and collide with other
@@ -46,7 +46,7 @@ import openfl.display.Graphics;
  * FlxG.overlap(playerGroup, medKitGroup
  *     function onOverlap(player, medKit)
  *     {
- *         player.heal(100);
+ *         player.health = 100;
  *         medKit.kill();
  *     }
  * );
@@ -670,9 +670,7 @@ class FlxObject extends FlxBasic
 	/**
 	 * Handy for storing health percentage or armor points or whatever.
 	 */
-	#if FLX_HEALTH_NOT_DEFINED
-	@:deprecated("object.health is deprecated, add <haxedef name=\"FLX_HEALTH\"/> in your project.xml to continue using it")
-	#end
+	@:deprecated("object.health is being removed in version 6.0.0")
 	public var health:Float = 1;
 	#end
 
@@ -1162,10 +1160,7 @@ class FlxObject extends FlxBasic
 	 *
 	 * @param   Damage   How much health to take away (use a negative number to give a health bonus).
 	 */
-	
-	#if FLX_HEALTH_NOT_DEFINED
-	@:deprecated("object.hurt is deprecated, add <haxedef name=\"FLX_HEALTH\"/> in your project.xml to continue using it")
-	#end
+	@:deprecated("object.health is being removed in version 6.0.0")
 	public function hurt(damage:Float):Void
 	{
 		health = health - damage;
@@ -1246,25 +1241,10 @@ class FlxObject extends FlxBasic
 		if (!camera.visible || !camera.exists || !isOnScreen(camera))
 			return;
 
-		final rect = getBoundingBox(camera);
-		if (FlxG.renderTile)
-		{
-			final PAD = 2;
-			final view = camera.getViewMarginRect();
-			view.left -= PAD;
-			view.top -= PAD;
-			view.right += PAD;
-			view.bottom += PAD;
-			rect.clipTo(view);
-			view.put();
-		}
-		
-		if (rect.width > 0 && rect.height > 0)
-		{
-			final gfx = beginDrawDebug(camera);
-			drawDebugBoundingBox(gfx, rect, allowCollisions, immovable);
-			endDrawDebug(camera);
-		}
+		var rect = getBoundingBox(camera);
+		var gfx:Graphics = beginDrawDebug(camera);
+		drawDebugBoundingBox(gfx, rect, allowCollisions, immovable);
+		endDrawDebug(camera);
 	}
 
 	function drawDebugBoundingBox(gfx:Graphics, rect:FlxRect, allowCollisions:FlxDirectionFlags, partial:Bool)
@@ -1292,7 +1272,7 @@ class FlxObject extends FlxBasic
 	function drawDebugBoundingBoxColor(gfx:Graphics, rect:FlxRect, color:FlxColor)
 	{
 		// fill static graphics object with square shape
-		gfx.lineStyle(1, color, 0.75, false, null, null, MITER, 255);
+		gfx.lineStyle(1, color, 0.75);
 		gfx.drawRect(rect.x + 0.5, rect.y + 0.5, rect.width - 1.0, rect.height - 1.0);
 	}
 

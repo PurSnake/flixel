@@ -4,8 +4,10 @@ import openfl.display.BitmapData;
 import openfl.ui.Keyboard;
 import flixel.FlxObject;
 import flixel.math.FlxPoint;
-import flixel.system.debug.Icon;
 import flixel.system.debug.interaction.Interaction;
+
+#if FLX_DEBUG @:bitmap("assets/images/debugger/buttons/mover.png") #end
+private class GraphicMoverTool extends BitmapData {}
 
 /**
  * A tool to move selected items.
@@ -24,8 +26,8 @@ class Mover extends Tool
 
 		_name = "Mover";
 		_shortcut = brain.macKeyboard ? "⌘" : "Ctrl";
-		setButton(Icon.mover);
-		setCursor(Icon.mover, -5, -5);
+		setButton(GraphicMoverTool);
+		setCursor(new GraphicMoverTool(0, 0));
 
 		return this;
 	}

@@ -681,9 +681,9 @@ class FlxGame extends Sprite
 
 		updateElapsed();
 
-		updateInput();
-		
 		FlxG.signals.preUpdate.dispatch();
+
+		updateInput();
 
 		#if FLX_SOUND_SYSTEM
 		FlxG.sound.update(FlxG.elapsed);
